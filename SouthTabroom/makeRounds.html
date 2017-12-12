@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
   <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" />
-  <title>SouthTabroom</title>
+  <title>SouthTabroom | Edit Debaters</title>
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -13,7 +13,7 @@
     
 </head>
 <body>
-  <header>	
+  <header>  
       <nav class="top-nav" style="background-color:#104E36">
       <div class="container">
           <div class="nav-wrapper">
@@ -24,18 +24,40 @@
       <ul id="slide-out" class="side-nav" >
       <li><a style="text-color:#000000;pointer-events: none">Menu</a></li>
 
-       <li class = "active"><a class="waves-effect" href="#"><i class="material-icons">home</i>Home</a></li>  
+         <li><a class="waves-effect" href="index.html"><i class="material-icons">home</i>Home</a></li>  
       <li><a class="waves-effect" href="addJudge.html"><i class="material-icons">assignment_ind</i>Add Judges</a></li>  
-      <li><a class="waves-effect" href="addTeam.html"><i class="material-icons">group_add</i>Add/Edit Debaters</a></li> 
+      <li class = "active"><a class="waves-effect" href="#"><i class="material-icons">group_add</i>Add/Edit Debaters</a></li> 
        <li><a class="waves-effect" href="addRoom.html"><i class="material-icons">add_to_photos</i>Add/Edit Rooms</a></li> 
     </ul>
  <main>
-  </main>
-  <h1 style = "text-align: center">Big Question Debate</h1>
+  <h4 style="text-align:center">Add Teams</h4>
+   <div class="row">
+   <div class = "container">
+                <form class="col s12">
+   <div class="input-field col s6">
+  <h6>Member 1 Full Name</h6> <input id="createDebater1_name" type="text" name="name" placeholder="e.g. Joshua Cohen"><br>
+  </div>
+   <div class="input-field col s6">
+  <h6>Member 2 Full Name (leave blank if one man)</h6> <input id="createDebater2_name" type="text" name="lastName" placeholder="e.g. Joseph Myers"><br>
+  </div>
+  <button id="createButton" type = "button" class="btn-large waves-effect waves-light green darken-3" onclick="tabroom_firebase_addObject()">Add</button>
+  </form>
+</form>
+</div>
+  <div class="row center">
+        <br>
+        
+    </div>
+    <br><br>
     <h4 style="text-align:center">Team List</h4>
     <!--OBJECT CARD-->
     <div id="maincontainerpage" class="container">
-    </div>
+  
+  </main>
+    </header>
+
+    
+
   <!--  Scripts-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="js/materialize.js"></script>
@@ -43,7 +65,11 @@
 
  <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
   <script>
- 
+  document.querySelector("#createDebater2_name").addEventListener("keyup", event => {
+    if(event.key !== "Enter") return; // Use `.key` instead.
+    document.querySelector("#createButton").click(); // Things you want to do.
+    event.preventDefault(); // No need to `return false;`.
+});
     var config = {
       apiKey: "AIzaSyAf-Gxwkw2OUcXuAOF9_T9pQZWkHFCLiWI",
       authDomain: "southtabroom.firebaseapp.com",
@@ -138,7 +164,7 @@ document.location = 'addTeam.html';
     function tabroom_firebase_deleteObj(objID)
         {
             firebase.database().ref('teams/' + objID).remove();
-            document.location = 'index.html';
+            document.location = 'addTeam.html';
         }
       
         
