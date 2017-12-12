@@ -29,6 +29,7 @@
       <li><a class="waves-effect" href="addTeam.html"><i class="material-icons">group_add</i>Add/Edit Debaters</a></li> 
        <li><a class="waves-effect" href="addRoom.html"><i class="material-icons">add_to_photos</i>Add/Edit Rooms</a></li> 
        <li><a class="waves-effect" href="addRound.html"><i class="material-icons">plus_one</i>Add Completed Round</a></li> 
+       <li><a class="waves-effect" href="makeRound.html"><i class="material-icons">add_circle</i>Generate Round</a></li> 
     </ul>
  <main>
   </main>
@@ -58,7 +59,7 @@
         <script>
         function tabroom_firebase_getObjects()
         {
-            return firebase.database().ref('/teams/').once('value').then(function(snapshot) {
+          return firebase.database().ref('/teams/').once('value').then(function(snapshot) {
               var json = snapshot.val();
                 for(var i in json)
                 {
@@ -67,13 +68,15 @@
                     var key = json[i].keyValue;
                     var name1 = json[i].name1;
                     var name2 = json[i].name2;
-                    var teamScore = json[i].teamScore;
                     var score1 = json[i].debater1Score;
                     var score2 = json[i].debater2Score;
+                    var wins = json[i].wins;
+                    var losses = json[i].losses;
+                    var numDebates = json[i].debates;
                     if (name2 == null || name2 == "" || name2 == "NaN") {
-                      document.getElementById("maincontainerpage").innerHTML += "<div class='row valign-wrapper'> <div class='col s12'> <div class='card'>  <span class='card-title'>" + name1 + " (" + score1 +")" + " (Solo) " +"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Team Score: " + teamScore + "</span> </div> <div class='card-content'>  </div> <div class='card-action'> <button class='btn waves-effect waves-light green darken-3' onclick='tabroom_firebase_deleteObj(" + key + ")'>Remove Team</button> </div> </div> </div> </div>";
+                      document.getElementById("maincontainerpage").innerHTML += "<div class='row valign-wrapper'> <div class='col s12'> <div class='card'>  <span class='card-title'>" + name1 + " (" + score1 +")" + " (Solo) " +"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Team Score: (" + wins + " - " + losses + ")" +  " &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   Number of Debates: " + numDebates + "</span> </div> <div class='card-content'>  </div> <div class='card-action'>  </div> </div> </div> </div>";
                     } else {
-                        document.getElementById("maincontainerpage").innerHTML += "<div class='row valign-wrapper'> <div class='col s12'> <div class='card'>  <span class='card-title'>" + name1 + " (" + score1 + ")" + " and " + name2 + " (" + score2 + ")" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Team Score: " + teamScore + "</span> </div> <div class='card-content'>  </div> <div class='card-action'> <button class='btn waves-effect waves-light green darken-3' onclick='tabroom_firebase_deleteObj(" + key + ")'>Remove Team</button> </div> </div> </div> </div>";
+                        document.getElementById("maincontainerpage").innerHTML += "<div class='row valign-wrapper'> <div class='col s12'> <div class='card'>  <span class='card-title'>" + name1 + " (" + score1 + ")" + " and " + name2 + " (" + score2 + ")" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Team Score: (" + wins + " - " + losses + ")" + " &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   Number of Debates: " + numDebates + "</span> </div> <div class='card-content'>  </div> <div class='card-action'> </div> </div> </div> </div>";
                       }
 
                   }

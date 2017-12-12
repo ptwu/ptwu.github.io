@@ -9,7 +9,6 @@
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     
 </head>
 <body>
@@ -29,6 +28,7 @@
       <li class = "active"><a class="waves-effect" href="#"><i class="material-icons">group_add</i>Add/Edit Debaters</a></li> 
        <li><a class="waves-effect" href="addRoom.html"><i class="material-icons">add_to_photos</i>Add/Edit Rooms</a></li> 
        <li><a class="waves-effect" href="addRound.html"><i class="material-icons">plus_one</i>Add Completed Round</a></li> 
+       <li><a class="waves-effect" href="makeRound.html"><i class="material-icons">add_circle</i>Generate Round</a></li> 
     </ul>
  <main>
   <h4 style="text-align:center">Add Teams</h4>
@@ -62,7 +62,6 @@
   <!--  Scripts-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="js/materialize.js"></script>
-  <script src="js/init.js"></script>
 
  <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
   <script>
@@ -93,13 +92,15 @@
                     var key = json[i].keyValue;
                     var name1 = json[i].name1;
                     var name2 = json[i].name2;
-                    var teamScore = json[i].teamScore;
                     var score1 = json[i].debater1Score;
                     var score2 = json[i].debater2Score;
+                    var wins = json[i].wins;
+                    var losses = json[i].losses;
+                    var numDebates = json[i].debates;
                     if (name2 == null || name2 == "" || name2 == "NaN") {
-                      document.getElementById("maincontainerpage").innerHTML += "<div class='row valign-wrapper'> <div class='col s12'> <div class='card'>  <span class='card-title'>" + name1 + " (" + score1 +")" + " (Solo) " +"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Team Score: " + teamScore + "</span> </div> <div class='card-content'>  </div> <div class='card-action'> <button class='btn waves-effect waves-light green darken-3' onclick='tabroom_firebase_deleteObj(" + key + ")'>Remove Team</button> </div> </div> </div> </div>";
+                      document.getElementById("maincontainerpage").innerHTML += "<div class='row valign-wrapper'> <div class='col s12'> <div class='card'>  <span class='card-title'>" + name1 + " (" + score1 +")" + " (Solo) " +"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Team Score: (" + wins + " - " + losses + ")" +  " &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   Number of Debates: " + numDebates + "</span> </div> <div class='card-content'>  </div> <div class='card-action'> <button class='btn waves-effect waves-light green darken-3' onclick='tabroom_firebase_deleteObj(" + key + ")'>Remove Team</button> </div> </div> </div> </div>";
                     } else {
-                        document.getElementById("maincontainerpage").innerHTML += "<div class='row valign-wrapper'> <div class='col s12'> <div class='card'>  <span class='card-title'>" + name1 + " (" + score1 + ")" + " and " + name2 + " (" + score2 + ")" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Team Score: " + teamScore + "</span> </div> <div class='card-content'>  </div> <div class='card-action'> <button class='btn waves-effect waves-light green darken-3' onclick='tabroom_firebase_deleteObj(" + key + ")'>Remove Team</button> </div> </div> </div> </div>";
+                        document.getElementById("maincontainerpage").innerHTML += "<div class='row valign-wrapper'> <div class='col s12'> <div class='card'>  <span class='card-title'>" + name1 + " (" + score1 + ")" + " and " + name2 + " (" + score2 + ")" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Team Score: (" + wins + " - " + losses + ")" + " &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   Number of Debates: " + numDebates + "</span> </div> <div class='card-content'>  </div> <div class='card-action'> <button class='btn waves-effect waves-light green darken-3' onclick='tabroom_firebase_deleteObj(" + key + ")'>Remove Team</button> </div> </div> </div> </div>";
                       }
 
                   }
@@ -145,7 +146,9 @@ var globalLoggedIn = false;
           var lastName = document.getElementById("createDebater2_name").value;
           var debater1S = 0;
           var debater2S = 0;
-          var teamscore = 0;
+          var teamWins = 0;
+          var teamLosses = 0;
+          var totalDebates = 0;
       var currentTime = new Date();
  
        firebase.database().ref('teams/' + randomNumber).set({
@@ -153,10 +156,12 @@ var globalLoggedIn = false;
        name1: title,
        dateadded: (currentTime.getMonth() + 1) + '/' + currentTime.getDate() + '/' + currentTime.getFullYear(),
        name2: lastName,
-       teamScore: teamscore,
+       wins: teamWins,
+       losses: teamLosses,
        debater1Score: debater1S,
        debater2Score: debater2S,
        keyValue: randomNumber,
+       debates: totalDebates
        
        });
 document.location = 'addTeam.html';

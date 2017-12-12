@@ -9,7 +9,7 @@
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
     
 </head>
 <body>
@@ -28,10 +28,11 @@
       <li><a class="waves-effect" href="addJudge.html"><i class="material-icons">assignment_ind</i>Add Judges</a></li>  
       <li><a class="waves-effect" href="addTeam.html"><i class="material-icons">group_add</i>Add/Edit Debaters</a></li> 
        <li><a class="waves-effect" href="addRoom.html"><i class="material-icons">add_to_photos</i>Add/Edit Rooms</a></li> 
-        <li class = "active"><a class="waves-effect" href="#l"><i class="material-icons">plus_one</i>Add Completed Round</a></li> 
+        <li class = "active"><a class="waves-effect" href="#l"><i class="material-icons">plus_one</i>Add Completed Round</a></li>
+        <li><a class="waves-effect" href="makeRound.html"><i class="material-icons">add_circle</i>Generate Round</a></li>  
     </ul>
  <main>
-  <h4 style="text-align:center">Add a Round (UNDER CONSTRUCTION this doesn't work atm)</h4>
+  <h4 style="text-align:center">Input Round Data</h4>
    <div class="row">
    <div class = "container">
                 <form class="col s12">
@@ -40,15 +41,15 @@
   <h6>Member 1 Full Name</h6> <input id="team1Debater1_name" type="text" name="name" placeholder="e.g. Joshua Cohen"><br>
   </div>
    <div class="input-field col s6">
-  <h6>Member 2 Full Name (leave blank if one man)</h6> <input id="team1Debater2_name" type="text" name="lastName" placeholder="e.g. Joseph Myers"><br>
+  <h6>Member 2 Full Name (leave blank if solo)</h6> <input id="team1Debater2_name" type="text" name="lastName" placeholder="e.g. Joseph Myers"><br>
   </div>
 
         <form class="col s12">
    <div class="input-field col s6">
-  <h6>Member 1 Score</h6> <input id="team1Debater1_score" type="text" name="name" placeholder="e.g. Joshua Cohen"><br>
+  <h6>Member 1 Score</h6> <input id="team1Debater1_score" type="text" name="name" placeholder="e.g. 27"><br>
   </div>
    <div class="input-field col s6">
-  <h6>Member 2 Score (leave blank if one man)</h6> <input id="team1Debater2_score" type="text" name="lastName" placeholder="e.g. Joseph Myers"><br>
+  <h6>Member 2 Score (leave blank if solo)</h6> <input id="team1Debater2_score" type="text" name="lastName" placeholder="e.g. 27"><br>
   </div>
 
   <h1>Team 2</h1>
@@ -56,15 +57,15 @@
   <h6>Member 1 Full Name</h6> <input id="team2Debater1_name" type="text" name="name" placeholder="e.g. Joshua Cohen"><br>
   </div>
    <div class="input-field col s6">
-  <h6>Member 2 Full Name (leave blank if one man)</h6> <input id="team2Debater2_name" type="text" name="lastName" placeholder="e.g. Joseph Myers"><br>
+  <h6>Member 2 Full Name (leave blank if solo)</h6> <input id="team2Debater2_name" type="text" name="lastName" placeholder="e.g. Joseph Myers"><br>
   </div>
   <form class="col s12">
 
    <div class="input-field col s6">
-  <h6>Member 1 Score</h6> <input id="team2Debater1_score" type="text" name="name" placeholder="e.g. Joshua Cohen"><br>
+  <h6>Member 1 Score</h6> <input id="team2Debater1_score" type="text" name="name" placeholder="e.g. 27"><br>
   </div>
    <div class="input-field col s6">
-  <h6>Member 2 Score (leave blank if one man)</h6> <input id="team2Debater2_score" type="text" name="lastName" placeholder="e.g. Joseph Myers"><br>
+  <h6>Member 2 Score (leave blank if solo)</h6> <input id="team2Debater2_score" type="text" name="lastName" placeholder="e.g. 27"><br>
   </div>
   <h3>Who won?</h3>
 
@@ -97,11 +98,11 @@
   <!--  Scripts-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="js/materialize.js"></script>
-  <script src="js/init.js"></script>
+
 
  <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
   <script>
-  document.querySelector("#createDebater2_name").addEventListener("keyup", event => {
+  document.querySelector("#team2Debater2_score").addEventListener("keyup", event => {
     if(event.key !== "Enter") return; // Use `.key` instead.
     document.querySelector("#createButton").click(); // Things you want to do.
     event.preventDefault(); // No need to `return false;`.
@@ -117,33 +118,6 @@
     firebase.initializeApp(config);
   </script>
         <script>
-        function tabroom_firebase_getObjects()
-        {
-            return firebase.database().ref('/teams/').once('value').then(function(snapshot) {
-              var json = snapshot.val();
-                for(var i in json)
-                {
-                  if(json[i].teamUID === firebase.auth().currentUser.uid)
-                  {
-                    var key = json[i].keyValue;
-                    var name1 = json[i].name1;
-                    var name2 = json[i].name2;
-                    var teamScore = json[i].teamScore;
-                    var score1 = json[i].debater1Score;
-                    var score2 = json[i].debater2Score;
-                    if (name2 == null || name2 == "" || name2 == "NaN") {
-                      document.getElementById("maincontainerpage").innerHTML += "<div class='row valign-wrapper'> <div class='col s12'> <div class='card'>  <span class='card-title'>" + name1 + " (" + score1 +")" + " (Solo) " +"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Team Score: " + teamScore + "</span> </div> <div class='card-content'>  </div> <div class='card-action'> <button class='btn waves-effect waves-light green darken-3' onclick='tabroom_firebase_deleteObj(" + key + ")'>Remove Team</button> </div> </div> </div> </div>";
-                    } else {
-                        document.getElementById("maincontainerpage").innerHTML += "<div class='row valign-wrapper'> <div class='col s12'> <div class='card'>  <span class='card-title'>" + name1 + " (" + score1 + ")" + " and " + name2 + " (" + score2 + ")" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Team Score: " + teamScore + "</span> </div> <div class='card-content'>  </div> <div class='card-action'> <button class='btn waves-effect waves-light green darken-3' onclick='tabroom_firebase_deleteObj(" + key + ")'>Remove Team</button> </div> </div> </div> </div>";
-                      }
-
-                  }
-                     
-                    
-                }
-              
-            });
-        }
         firebase.auth().signInAnonymously().catch(function(error) {
   // Handle Errors here.
   var errorCode = error.code;
@@ -164,7 +138,7 @@ var globalLoggedIn = false;
   }
   // ...
 });
-       tabroom_firebase_getObjects();
+     
   document.addEventListener('deviceready', function() {
           
       });
@@ -176,27 +150,187 @@ var globalLoggedIn = false;
         {
           var database = firebase.database();
           var randomNumber = new Date().getUTCMilliseconds();
-          var title = document.getElementById("createDebater1_name").value;
-          var lastName = document.getElementById("createDebater2_name").value;
-          var debater1S = 0;
-          var debater2S = 0;
-          var teamscore = 0;
-      var currentTime = new Date();
- 
-       firebase.database().ref('teams/' + randomNumber).set({
-       teamUID: firebase.auth().currentUser.uid,
-       name1: title,
-       dateadded: (currentTime.getMonth() + 1) + '/' + currentTime.getDate() + '/' + currentTime.getFullYear(),
-       name2: lastName,
-       teamScore: teamscore,
-       debater1Score: debater1S,
-       debater2Score: debater2S,
-       keyValue: randomNumber,
-       
-       });
-document.location = 'addTeam.html';
-            
+          var t1m1Name = document.getElementById("team1Debater1_name").value;
+          var t1m2Name = document.getElementById("team1Debater2_name").value;
+          var t2m1Name =document.getElementById("team2Debater1_name").value;
+          var t2m2Name = document.getElementById("team2Debater2_name").value;
+          var t1m1Score = document.getElementById("team1Debater1_score").value;
+          var t1m2Score = document.getElementById("team1Debater2_score").value;
+          var t2m1Score = document.getElementById("team2Debater1_score").value;
+          var t2m2Score = document.getElementById("team2Debater2_score").value;
+          var team1Win = document.getElementById("team1Win").checked;
+          var team2Win = document.getElementById("team2Win").checked;
+          var numDebates;
+          var currentTime = new Date();
+
+          return firebase.database().ref('/teams/').once('value').then(function(snapshot) {
+              var json = snapshot.val();
+                for(var i in json)
+                {
+                  if ((t1m2Name == null || t1m2Name == "" || t1m2Name == "NaN")) {
+                      if(json[i].name1 === t1m1Name && json[i].name2 === t1m2Name) {
+                        numDebates = json[i].debates;
+                        numDebates += 1;
+                        var key = json[i].keyValue;
+                        var name1 = json[i].name1;
+                        var score1 = json[i].debater1Score;
+                        var wins1 = json[i].wins;
+                        var UID = json[i].teamUID;
+                        var losses1 = json[i].losses;
+                        var date = json[i].dateadded;
+                        if(team1Win) {
+                          wins1 += 1;
+                        } else {
+                          losses1 += 1;
+                        }
+                        var avgScore1 = 0.0;
+                        var avgScore2 = 0.0;
+                        avgScore1 = (parseFloat(score1) * (parseFloat(numDebates) - 1.0) + parseFloat(t1m1Score)) / parseFloat(numDebates); 
+                        avgScore2 = (parseFloat(score2) * (parseFloat(numDebates) - 1.0) + parseFloat(t1m2Score)) / parseFloat(numDebates); 
+                        Math.round(100*avgScore1)/100;
+                        Math.round(100*avgScore2)/100;
+                         firebase.database().ref('teams/' + key).set({
+                           debates: numDebates,
+                           debater1Score: avgScore1,
+                           debater2Score: null,
+                           wins: wins1,
+                           losses: losses1,
+                           name1: name1,
+                           name2: "",
+                           keyValue: key,
+                           teamUID: UID,
+                           dateadded: date
+                         });
+                       }
+                     }
+                       if((t2m2Name == null || t2m2Name == "" || t2m2Name == "NaN")) {
+                       if(json[i].name1 === t2m1Name && json[i].name2 === t2m2Name) {
+                        numDebates = json[i].debates;
+                        numDebates++;
+                        var key = json[i].keyValue;
+                        var name1 = json[i].name1;
+                        var score1 = json[i].debater1Score;
+                        var wins2 = json[i].wins;
+                        var losses2 = json[i].losses;
+                        var UID = json[i].teamUID;
+                        var date = json[i].dateadded;
+                        if(team2Win) {
+                          wins2 += 1;
+                        } else {
+                          losses2 += 1;
+                        }
+                        var avgScore1 = 0.0;
+                        var avgScore2 = 0.0;
+                        avgScore1 = (parseFloat(score1) * (parseFloat(numDebates) - 1.0) + parseFloat(t2m1Score)) / parseFloat(numDebates); 
+                        avgScore2 = (parseFloat(score2) * (parseFloat(numDebates) - 1.0) + parseFloat(t2m2Score)) / parseFloat(numDebates); 
+                        Math.round(100*avgScore1)/100;
+                        Math.round(100*avgScore2)/100;
+                         firebase.database().ref('teams/' + key).set({
+                           debates: numDebates,
+                           debater1Score: avgScore1,
+                           debater2Score: null,
+                           wins: wins2,
+                           losses: losses2,
+                           name1: name1,
+                           name2: "",
+                           keyValue: key,
+                           teamUID: UID,
+                           dateadded: date
+                           
+                         });
+
+                       }
+                     }
+                  
+                    if(json[i].teamUID === firebase.auth().currentUser.uid)
+                    {
+              
+                        if(json[i].name1 === t1m1Name && json[i].name2 === t1m2Name) {
+                        numDebates = json[i].debates;
+                        numDebates += 1;
+                        var key = json[i].keyValue;
+                        var name1 = json[i].name1;
+                        var name2 = json[i].name2;
+                        var score1 = json[i].debater1Score;
+                        var score2 = json[i].debater2Score;
+                        var wins1 = json[i].wins;
+                        var UID = json[i].teamUID;
+                        var losses1 = json[i].losses;
+                        var date = json[i].dateadded;
+                        if(team1Win) {
+                          wins1 += 1;
+                        } else {
+                          losses1 += 1;
+                        }
+                        var avgScore1 = 0.0;
+                        var avgScore2 = 0.0;
+                        avgScore1 = (parseFloat(score1) * (parseFloat(numDebates) - 1.0) + parseFloat(t1m1Score)) / parseFloat(numDebates); 
+                        avgScore2 = (parseFloat(score2) * (parseFloat(numDebates) - 1.0) + parseFloat(t1m2Score)) / parseFloat(numDebates); 
+                        Math.round(100*avgScore1)/100;
+                        Math.round(100*avgScore2)/100;
+                         firebase.database().ref('teams/' + key).set({
+                           debates: numDebates,
+                           debater1Score: avgScore1,
+                           debater2Score: avgScore2,
+                           wins: wins1,
+                           losses: losses1,
+                           name1: name1,
+                           name2: name2,
+                           keyValue: key,
+                           teamUID: UID,
+                           dateadded: date
+                         });
+                       }
+                       if(json[i].name1 === t2m1Name && json[i].name2 === t2m2Name) {
+                        numDebates = json[i].debates;
+                        numDebates++;
+                        var key = json[i].keyValue;
+                        var name1 = json[i].name1;
+                        var name2 = json[i].name2;
+                        var score1 = json[i].debater1Score;
+                        var score2 = json[i].debater2Score;
+                        var wins2 = json[i].wins;
+                        var losses2 = json[i].losses;
+                        var UID = json[i].teamUID;
+                        var date = json[i].dateadded;
+                        if(team2Win) {
+                          wins2 += 1;
+                        } else {
+                          losses2 += 1;
+                        }
+                        var avgScore1 = 0.0;
+                        var avgScore2 = 0.0;
+                        avgScore1 = (parseFloat(score1) * (parseFloat(numDebates) - 1.0) + parseFloat(t2m1Score)) / parseFloat(numDebates); 
+                        avgScore2 = (parseFloat(score2) * (parseFloat(numDebates) - 1.0) + parseFloat(t2m2Score)) / parseFloat(numDebates); 
+                        Math.round(100*avgScore1)/100;
+                        Math.round(100*avgScore2)/100;
+                         firebase.database().ref('teams/' + key).set({
+                           debates: numDebates,
+                           debater1Score: avgScore1,
+                           debater2Score: avgScore2,
+                           wins: wins2,
+                           losses: losses2,
+                           name1: name1,
+                           name2: name2,
+                           keyValue: key,
+                           teamUID: UID,
+                           dateadded: date
+                           
+                         });
+
+                       }
+                   }
+                  
+                      document.location = 'addRound.html';
+                    
+                }
+              
+          });
+
         }
+
+       
+
     function tabroom_firebase_deleteObj(objID)
         {
             firebase.database().ref('teams/' + objID).remove();

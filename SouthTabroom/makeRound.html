@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
   <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" />
-  <title>SouthTabroom | Edit Debaters</title>
+  <title>SouthTabroom | Make Round</title>
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -26,22 +26,18 @@
 
          <li><a class="waves-effect" href="index.html"><i class="material-icons">home</i>Home</a></li>  
       <li><a class="waves-effect" href="addJudge.html"><i class="material-icons">assignment_ind</i>Add Judges</a></li>  
-      <li class = "active"><a class="waves-effect" href="#"><i class="material-icons">group_add</i>Add/Edit Debaters</a></li> 
+      <li><a class="waves-effect" href="addTeam.html"><i class="material-icons">group_add</i>Add/Edit Debaters</a></li> 
        <li><a class="waves-effect" href="addRoom.html"><i class="material-icons">add_to_photos</i>Add/Edit Rooms</a></li> 
        <li><a class="waves-effect" href="addRound.html"><i class="material-icons">plus_one</i>Add Completed Round</a></li> 
+       <li class = "active"><a class="waves-effect" href="#"><i class="material-icons">add_circle</i>Generate Round</a></li> 
     </ul>
  <main>
-  <h4 style="text-align:center">Add Teams</h4>
+  <h4 style="text-align:center">Generate Round (Teams, Judges, Room)</h4>
    <div class="row">
    <div class = "container">
                 <form class="col s12">
-   <div class="input-field col s6">
-  <h6>Member 1 Full Name</h6> <input id="createDebater1_name" type="text" name="name" placeholder="e.g. Joshua Cohen"><br>
-  </div>
-   <div class="input-field col s6">
-  <h6>Member 2 Full Name (leave blank if one man)</h6> <input id="createDebater2_name" type="text" name="lastName" placeholder="e.g. Joseph Myers"><br>
-  </div>
-  <button id="createButton" type = "button" class="btn-large waves-effect waves-light green darken-3" onclick="tabroom_firebase_addObject()">Add</button>
+  <p class="center-align">
+  <button id="createButton" type = "button" class="btn-large waves-effect waves-light green darken-3 center" onclick="tabroom_firebase_generateRound()">GENERATE</button></p>
   </form>
 </form>
 </div>
@@ -50,7 +46,7 @@
         
     </div>
     <br><br>
-    <h4 style="text-align:center">Team List</h4>
+    <h4 style="text-align:center">Round List</h4>
     <!--OBJECT CARD-->
     <div id="maincontainerpage" class="container">
   
@@ -137,7 +133,7 @@ var globalLoggedIn = false;
   </script>
 
   <script>
-    function tabroom_firebase_addObject()
+    function tabroom_firebase_generateRound()
         {
           var database = firebase.database();
           var randomNumber = new Date().getUTCMilliseconds();
