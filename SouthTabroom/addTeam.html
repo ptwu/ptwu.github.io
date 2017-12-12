@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
   <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" />
-  <title>SouthTabroom</title>
+  <title>SouthTabroom | Edit Debaters</title>
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -13,7 +13,7 @@
     
 </head>
 <body>
-  <header>	
+  <header>  
       <nav class="top-nav" style="background-color:#104E36">
       <div class="container">
           <div class="nav-wrapper">
@@ -24,14 +24,38 @@
       <ul id="slide-out" class="side-nav" >
       <li><a style="text-color:#000000;pointer-events: none">Menu</a></li>
 
-       <li class = "active"><a class="waves-effect" href="#"><i class="material-icons">home</i>Home</a></li>  
+         <li><a class="waves-effect" href="index.html"><i class="material-icons">home</i>Home</a></li>  
       <li><a class="waves-effect" href="addJudge.html"><i class="material-icons">assignment_ind</i>Add Judges</a></li>  
-      <li><a class="waves-effect" href="addTeam.html"><i class="material-icons">group_add</i>Add/Edit Debaters</a></li> 
+      <li class = "active"><a class="waves-effect" href="#"><i class="material-icons">group_add</i>Add/Edit Debaters</a></li> 
        <li><a class="waves-effect" href="addRoom.html"><i class="material-icons">add_to_photos</i>Add/Edit Rooms</a></li> 
     </ul>
  <main>
+  <h4 style="text-align:center">Add Teams</h4>
+   <div class="row">
+   <div class = "container">
+                <form class="col s12">
+   <div class="input-field col s6">
+  <h6>Member 1 Full Name</h6> <input id="createDebater1_name" type="text" name="name" placeholder="e.g. Joshua Cohen"><br>
+  </div>
+   <div class="input-field col s6">
+  <h6>Member 2 Full Name (leave blank if one man)</h6> <input id="createDebater2_name" type="text" name="lastName" placeholder="e.g. Joseph Myers"><br>
+  </div>
+  <button id="createButton" type = "button" class="btn-large waves-effect waves-light green darken-3" onclick="tabroom_firebase_addObject()">Add</button>
+  </form>
+</form>
+</div>
+  <div class="row center">
+        <br>
+        
+    </div>
+    <br><br>
+    <h4 style="text-align:center">Team List</h4>
+    <!--OBJECT CARD-->
+    <div id="maincontainerpage" class="container">
+  
   </main>
-  <h1 style = "text-align: center">Big Question Debate</h1>
+    </header>
+
     
 
   <!--  Scripts-->
@@ -41,7 +65,7 @@
 
  <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
   <script>
-  document.querySelector("#createJudge_lastName").addEventListener("keyup", event => {
+  document.querySelector("#createDebater2_name").addEventListener("keyup", event => {
     if(event.key !== "Enter") return; // Use `.key` instead.
     document.querySelector("#createButton").click(); // Things you want to do.
     event.preventDefault(); // No need to `return false;`.
@@ -59,16 +83,23 @@
         <script>
         function tabroom_firebase_getObjects()
         {
-            return firebase.database().ref('/objects/').once('value').then(function(snapshot) {
+            return firebase.database().ref('/teams/').once('value').then(function(snapshot) {
               var json = snapshot.val();
                 for(var i in json)
                 {
-                  if(json[i].creatorUID === firebase.auth().currentUser.uid)
+                  if(json[i].teamUID === firebase.auth().currentUser.uid)
                   {
                     var key = json[i].keyValue;
-                    var lastName = json[i].judgeLastName;
-                    var creatorName = json[i].creatorName;
-                        document.getElementById("maincontainerpage").innerHTML += "<div class='row valign-wrapper'> <div class='col s12'> <div class='card'>  <span class='card-title'>" + creatorName + " " + lastName + "</span> </div> <div class='card-content'>  </div> <div class='card-action'> <button class='btn waves-effect waves-light green darken-3' onclick='tabroom_firebase_deleteObj(" + key + ")'>Remove Judge</button> </div> </div> </div> </div>";
+                    var name1 = json[i].name1;
+                    var name2 = json[i].name2;
+                    var teamScore = json[i].teamScore;
+                    var score1 = json[i].debater1Score;
+                    var score2 = json[i].debater2Score;
+                    if (name2 == null || name2 == "" || name2 == "NaN") {
+                      document.getElementById("maincontainerpage").innerHTML += "<div class='row valign-wrapper'> <div class='col s12'> <div class='card'>  <span class='card-title'>" + name1 + " (" + score1 +")" + " (Solo) " +"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Team Score: " + teamScore + "</span> </div> <div class='card-content'>  </div> <div class='card-action'> <button class='btn waves-effect waves-light green darken-3' onclick='tabroom_firebase_deleteObj(" + key + ")'>Remove Team</button> </div> </div> </div> </div>";
+                    } else {
+                        document.getElementById("maincontainerpage").innerHTML += "<div class='row valign-wrapper'> <div class='col s12'> <div class='card'>  <span class='card-title'>" + name1 + " (" + score1 + ")" + " and " + name2 + " (" + score2 + ")" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Team Score: " + teamScore + "</span> </div> <div class='card-content'>  </div> <div class='card-action'> <button class='btn waves-effect waves-light green darken-3' onclick='tabroom_firebase_deleteObj(" + key + ")'>Remove Team</button> </div> </div> </div> </div>";
+                      }
 
                   }
                      
@@ -86,7 +117,7 @@
 var globalLoggedIn = false;
         firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
-  	 globalLoggedIn = true;
+     globalLoggedIn = true;
     // User is signed in.
     var isAnonymous = user.isAnonymous;
     var uid = user.uid;
@@ -109,25 +140,31 @@ var globalLoggedIn = false;
         {
           var database = firebase.database();
           var randomNumber = new Date().getUTCMilliseconds();
-          var title = document.getElementById("createJudge_name").value;
-          var lastName = document.getElementById("createJudge_lastName").value;
+          var title = document.getElementById("createDebater1_name").value;
+          var lastName = document.getElementById("createDebater2_name").value;
+          var debater1S = 0;
+          var debater2S = 0;
+          var teamscore = 0;
       var currentTime = new Date();
-   
-       firebase.database().ref('objects/' + randomNumber).set({
-       creatorUID: firebase.auth().currentUser.uid,
-       creatorName: title,
+ 
+       firebase.database().ref('teams/' + randomNumber).set({
+       teamUID: firebase.auth().currentUser.uid,
+       name1: title,
        dateadded: (currentTime.getMonth() + 1) + '/' + currentTime.getDate() + '/' + currentTime.getFullYear(),
-       judgeLastName: lastName,
+       name2: lastName,
+       teamScore: teamscore,
+       debater1Score: debater1S,
+       debater2Score: debater2S,
        keyValue: randomNumber,
        
        });
-document.location = 'index.html';
+document.location = 'addTeam.html';
             
         }
     function tabroom_firebase_deleteObj(objID)
         {
-            firebase.database().ref('objects/' + objID).remove();
-            document.location = 'index.html';
+            firebase.database().ref('teams/' + objID).remove();
+            document.location = 'addTeam.html';
         }
       
         
