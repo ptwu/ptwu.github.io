@@ -9,8 +9,6 @@
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-    
 </head>
 <body>
   <header>	
@@ -33,7 +31,8 @@
     </ul>
  <main>
   </main>
-  <h1 style = "text-align: center">Big Question Debate</h1>
+  <p class="center-align">
+  <img src = "bigquestions.png"></div></p>
     <h4 style="text-align:center">Team List</h4>
     <!--OBJECT CARD-->
     <div id="maincontainerpage" class="container">
@@ -41,7 +40,7 @@
   <!--  Scripts-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="js/materialize.js"></script>
-  <script src="js/init.js"></script>
+
 
  <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
   <script>
@@ -61,28 +60,53 @@
         {
           return firebase.database().ref('/teams/').once('value').then(function(snapshot) {
               var json = snapshot.val();
-                for(var i in json)
+              var array = [];
+              var array2 = [];
+              for(var i in json)
                 {
                   if(json[i].teamUID === firebase.auth().currentUser.uid)
                   {
-                    var key = json[i].keyValue;
-                    var name1 = json[i].name1;
-                    var name2 = json[i].name2;
-                    var score1 = json[i].debater1Score;
-                    var score2 = json[i].debater2Score;
-                    var wins = json[i].wins;
-                    var losses = json[i].losses;
-                    var numDebates = json[i].debates;
-                    if (name2 == null || name2 == "" || name2 == "NaN") {
-                      document.getElementById("maincontainerpage").innerHTML += "<div class='row valign-wrapper'> <div class='col s12'> <div class='card'>  <span class='card-title'>" + name1 + " (" + score1 +")" + " (Solo) " +"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Team Score: (" + wins + " - " + losses + ")" +  " &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   Number of Debates: " + numDebates + "</span> </div> <div class='card-content'>  </div> <div class='card-action'>  </div> </div> </div> </div>";
-                    } else {
-                        document.getElementById("maincontainerpage").innerHTML += "<div class='row valign-wrapper'> <div class='col s12'> <div class='card'>  <span class='card-title'>" + name1 + " (" + score1 + ")" + " and " + name2 + " (" + score2 + ")" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Team Score: (" + wins + " - " + losses + ")" + " &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   Number of Debates: " + numDebates + "</span> </div> <div class='card-content'>  </div> <div class='card-action'> </div> </div> </div> </div>";
-                      }
-
+                    var n = ((parseFloat(json[i].wins) - parseFloat(json[i].losses)) * 130) + (parseFloat(json[i].debater1Score) + parseFloat(json[i].debater2Score));
+                    array.push(n);
+                    array2.push(json[i].keyValue);
                   }
-                     
-                    
+                  var myMap = new Map();
+                  for(var jjj = 0; jjj < array.length; jjj++) {
+                    myMap.set(array[jjj], array2[jjj]);
+                  }
+                  myMap.sort();
+                  
                 }
+                console.log(array2.toString());
+                for(var bount = 0; bount < array2.length; bount++) {  
+                  for(var i in json)
+                 {
+
+                    if(json[i].teamUID === firebase.auth().currentUser.uid)
+                    {
+                                              console.log(json[i].keyValue);
+                      if(parseFloat(array2[bount]) === parseFloat(json[i].keyValue)) {
+
+                      var key = json[i].keyValue;
+                      var name1 = json[i].name1;
+                      var name2 = json[i].name2;
+                      var score1 = json[i].debater1Score;
+                      var score2 = json[i].debater2Score;
+                      var wins = json[i].wins;
+                      var losses = json[i].losses;
+                      var numDebates = json[i].debates;
+                      if (name2 == null || name2 == "" || name2 == "NaN") {
+                        document.getElementById("maincontainerpage").innerHTML += "<div class='row valign-wrapper'> <div class='col s12'> <div class='card'>  <span class='card-title'>" + name1 + " (" + score1 +")" + " (Solo) " +"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Team Score: (" + wins + " - " + losses + ")" +  " &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   Number of Debates: " + numDebates + "</span> </div> <div class='card-content'>  </div> <div class='card-action'>  </div> </div> </div> </div>";
+                      } else {
+                          document.getElementById("maincontainerpage").innerHTML += "<div class='row valign-wrapper'> <div class='col s12'> <div class='card'>  <span class='card-title'>" + name1 + " (" + score1 + ")" + " and " + name2 + " (" + score2 + ")" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Team Score: (" + wins + " - " + losses + ")" + " &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   Number of Debates: " + numDebates + "</span> </div> <div class='card-content'>  </div> <div class='card-action'> </div> </div> </div> </div>";
+                        }
+
+                     }
+                       }
+                    
+                  }
+                }
+                
               
             });
         }

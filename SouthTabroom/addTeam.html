@@ -83,8 +83,11 @@
         <script>
         function tabroom_firebase_getObjects()
         {
-            return firebase.database().ref('/teams/').once('value').then(function(snapshot) {
+          //firebase.database().ref('/teams/').orderByChild("net").on("child_added", function(snapshot)  {
+            var ref = firebase.database().ref('/teams/');
+            ref.orderByChild("net").on("child_added", function(snapshot) { 
               var json = snapshot.val();
+              console.log(json);
                 for(var i in json)
                 {
                   if(json[i].teamUID === firebase.auth().currentUser.uid)
@@ -93,7 +96,7 @@
                     var name1 = json[i].name1;
                     var name2 = json[i].name2;
                     var score1 = json[i].debater1Score;
-                    var score2 = json[i].debater2Score;
+                    var score2 = json[i].debater2Score;console.log("yeah");
                     var wins = json[i].wins;
                     var losses = json[i].losses;
                     var numDebates = json[i].debates;
@@ -149,6 +152,8 @@ var globalLoggedIn = false;
           var teamWins = 0;
           var teamLosses = 0;
           var totalDebates = 0;
+          var netScore = 0;
+
       var currentTime = new Date();
  
        firebase.database().ref('teams/' + randomNumber).set({
@@ -161,8 +166,8 @@ var globalLoggedIn = false;
        debater1Score: debater1S,
        debater2Score: debater2S,
        keyValue: randomNumber,
-       debates: totalDebates
-       
+       debates: totalDebates,
+       net: netScore
        });
 document.location = 'addTeam.html';
             
