@@ -1,0 +1,83 @@
+@font-face {
+    font-family: Metropolis-Medium;
+
+    src: url('font/Metropolis-Medium.otf'), url('font/Metropolis-Medium.otf') format("opentype");
+}
+
+@font-face {
+    font-family: Metropolis-Bold;
+    font-weight: bold;
+    src: url("font/Metropolis-Bold.otf"), url("font/Metropolis-Bold.otf") format("opentype");
+}
+
+span {
+  font-family: Metropolis-Medium;
+}
+.sect {
+  min-height: 95vh; 
+  background: whitesmoke;
+}
+a {
+  font-family: Metropolis-Medium;
+}
+h1 {
+  font-family: Metropolis-Bold;
+}
+
+h3, h4, h5, h6 {
+  font-family: Metropolis-Medium;
+}
+
+p {
+
+  font-family: Metropolis-Medium;
+
+}
+
+
+#sidenav-overlay {
+    background-color: transparent;
+}
+
+
+  .header-unit {
+      height: 150px;
+      border: 2px solid #000;
+      border-right:none;
+      border-left: none;
+      position: relative;
+      padding: 20px;
+  }
+
+  .video-container {
+    height:100vh;
+    position: relative;
+  }
+  video {
+    height: auto;
+    vertical-align: middle;
+    width: 100%;
+    position: absolute;
+    top: 50%; 
+    left: 50%;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    min-width: 100%; 
+    min-height: 100%; 
+    width: auto; 
+
+    z-index: -1000; 
+    overflow: hidden;
+  }
+
+.ccenter {
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.navbar-fixed {
+  zoom: 90%;
+}

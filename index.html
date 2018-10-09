@@ -1,49 +1,211 @@
-
-<!doctype html>
-<html>
-<!-- ok -->
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link href="materialize.css" type="text/css" rel="stylesheet">
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ptwu</title>
-</head>
-<body>
-<nav class="blue lighten-0" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">ptwu</a>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>Peter Wu</title>
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   
-      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+  <link rel="apple-touch-icon" sizes="120x120" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+
+</head>
+
+<body data-spy="scroll" data-target="#navbar">
+<header>
+
+<div class="navbar-fixed">
+  <nav class="black" role="navigation" id = "navbar">
+
+      
+     <a href="#" class="brand-logo center"><img class="responsive-img" src = "img/ptwulogo.png" width = "50" height = "50" style = "margin-top: 5px;"></img></a> <a href="#" class="brand-logo right" style="font-size:12px"></a> 
+  </nav>
+   </div>
+
+   </header>
+
+
+  <div class="video-container">
+     <video autoplay loop muted poster="img/bg.jpg" >
+         <source src="img/bgvid.webm" type="video/webm">
+     
+     </video>
+     <div class="overlay-desc">
+        <div class = "container" style = "display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; min-height: 95vh; ">
+
+
+        <h1 class="header center white-text">Hi, I'm Peter.</u></h1>
+        <h5 class="header center" style = "color: #fbfbfb">sometimes I have ideas and make them into projects</u></h5>
+        <br><br>
+<br>
+<br><br>
+
+        </div>
+        </div>
+ 
+      </div>
+
+  <section id="#learnmore" class="scrollspy sect">
+      <!--   Icon Section   -->
+      <div>
+      <div class = "container"><br>
+       <h6 class="header center">cool stuff I've done</style></h6>
+      <h1 class="header center">Projects</h1>
+      <div class = "container">
+       
+       </div>
+       <br>
+      <div class="row">
+      
+        <div class="col s12 m4">
+      <div class = "container">
+          <div class="card">
+        
+            <div class="card-content">
+            <h5><b>Traffic</b>Sim</h5><br>
+              <p>Webapp made in HTML, CSS, and JS  optimize intersection traffic light cycle times with input data and calculations using physics equations. &nbsp;<a href = "http://peterwu.pw/TrafficSim/writeup.pdf">Paper</a></p>
+            </div>
+              <div class="card-action red">
+            <a href="http://peterwu.pw/TrafficSim/" class = "white-text">Link</a>
+            </div>
+            </div>
+          </div>
+        </div>
+
+<div class="col s12 m4">
+      <div class = "container">
+          <div class="card">
+        
+            <div class="card-content">
+            <h5><b>Pirate</b> Maps</h5><br>
+              <p>Mapping Android app made with Unity3D, made for helping new students navigate through school. Uses Dijkstra's algorithm to find optimal pathways between the "nodes" of school classrooms.</p>
+            </div>
+              <div class="card-action green darken-2">
+            <a href="https://play.google.com/store/apps/details?id=com.CSI.HSSPirateMaps" class = "white-text">Link</a>
+            </div>
+            </div>
+          </div>
+        </div>
+
+     <div class="col s12 m4">
+      <div class = "container">
+          <div class="card">
+        
+            <div class="card-content">
+            <h5><b>Food</b>Drop</h5><br>
+              <p>Webapp made using Cordova (and Firebase for a backend) with an aim to prevent food waste in communities using crowdsourced data (needs location to be enabled). </p>
+            </div>
+              <div class="card-action pink">
+            <a href="https://fooddropapp.github.io/" class = "white-text">Link</a>
+            </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+       <div class="row">
+      
+        <div class="col s12 m4">
+      <div class = "container">
+          <div class="card">
+        
+            <div class="card-content">
+            <h5><b>Smart</b>Sieve</h5><br>
+              <p>Chrome extension implementing the Clarifai API to analyze images, flagging them as safe or unsafe for work.</p>
+            </div>
+              <div class="card-action blue">
+            <a href="https://chrome.google.com/webstore/detail/smart-sieve/gegngkeciggmgpjdahkffpdfgdldeeib" class = "white-text">Link</a>
+            </div>
+            </div>
+          </div>
+        </div>
+
+<div class="col s12 m4">
+      <div class = "container">
+          <div class="card">
+        
+            <div class="card-content">
+            <h5><b>Class</b> Reveal</h5><br>
+              <p>Website made to crowdsource schedule and roster data for students across the school district, reaching over 2,500 verified students in the district.</p>
+            </div>
+              <div class="card-action orange">
+            <a href="https://classreveal.com" class = "white-text">Link</a>
+            </div>
+            </div>
+          </div>
+        </div>
+
+     <div class="col s12 m4">
+      <div class = "container">
+          <div class="card">
+        
+            <div class="card-content">
+            <h5><b>WWPMT</b></h5><br>
+              <p>The WW-P Mathematics Tournament website, created with Google App Engine, houses a scoring and problem submission database and advertises the annual competition, which draws in over 500 students per year.</p>
+            </div>
+              <div class="card-action black">
+            <a href="https://wwpmt.org/" class = "white-text">Link</a>
+            </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
-</nav>
+    </div>
 
-	<div class="row center">
-	<a href="#" id="download-button" class="btn-large waves-effect waves-light blue"></a>
-		<a href="#" id="download-button" class="btn-large waves-effect waves-light blue"></a>
-			<a href="#" id="download-button" class="btn-large waves-effect waves-light blue"></a>
-				<a href="#" id="download-button" class="btn-large waves-effect waves-light blue"></a>
-					<a href="#" id="download-button" class="btn-large waves-effect waves-light blue"></a>
-						<a href="#" id="download-button" class="btn-large waves-effect waves-light blue"></a>
-							<a href="#" id="download-button" class="btn-large waves-effect waves-light blue"></a>
-								<a href="#" id="download-button" class="btn-large waves-effect waves-light blue"></a>
-									<a href="#" id="download-button" class="btn-large waves-effect waves-light blue"></a>
-										<a href="#" id="download-button" class="btn-large waves-effect waves-light blue"></a>
-											<a href="#" id="download-button" class="btn-large waves-effect waves-light blue"></a>
-												<a href="#" id="download-button" class="btn-large waves-effect waves-light blue"></a>
-												<br>
-		<a href="#" id="download-button" class="btn-large waves-effect waves-light blue"></a>
-			<a href="#" id="download-button" class="btn-large waves-effect waves-light blue"></a>
-				<a href="#" id="download-button" class="btn-large waves-effect waves-light blue"></a>
-					<a href="#" id="download-button" class="btn-large waves-effect waves-light blue"></a>
-						<a href="#" id="download-button" class="btn-large waves-effect waves-light blue"></a>
-							<a href="#" id="download-button" class="btn-large waves-effect waves-light blue"></a>
-								<a href="#" id="download-button" class="btn-large waves-effect waves-light blue"></a>
-									<a href="#" id="download-button" class="btn-large waves-effect waves-light blue"></a>
-										<a href="#" id="download-button" class="btn-large waves-effect waves-light blue"></a>
-											<a href="#" id="download-button" class="btn-large waves-effect waves-light blue"></a>
 
-	</div>
-</body>
+    <br>
+    
+  </div>
+  </div>
+</section>
+
+<footer class="page-footer white">
+
+      <div class="container" style = "font-family: Metropolis-Medium; margin-top: -10px">
+      Peter Wu, WW-P South Class of 2019
+      
+    <br>
+<br>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.min.js"></script>
+ 
+  <script type="text/javascript">
+    $(document).ready(function () {
+        var menu = $('.menu');
+        var target = $('#' +menu.attr("data-target"));
+        menu.pushpin({
+         
+        });
+    });
+
+    $(".button-collapse").sideNav();
+
+    $('.button-collapse').sideNav({
+     	 menuWidth: 300,
+     	 closeOnClick: true 
+    	}
+  	);
+
+  
+
+    $(document).ready(function(){
+        $('.scrollspy').scrollSpy();
+    });
+  </script>
+  </body>
 </html>
