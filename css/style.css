@@ -34,11 +34,19 @@ p {
 
 }
 
+.hover-item:hover {
+  filter: brightness(70%);
+}
+.hover-item-2:hover {
+  filter: brightness(120%);
+}
 
 #sidenav-overlay {
     background-color: transparent;
 }
-
+.card-action:hover{
+   background-color:#FFFFFF;
+}
 
   .header-unit {
       height: 150px;
